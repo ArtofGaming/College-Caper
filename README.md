@@ -2,7 +2,7 @@
  
 WebGL: https://artofgaming.github.io/College-Caper/BuildMine/
 
-This fashion game uses MVC architecture to create a simple dress up game experience. The view layer is inside of Unity, and all the clothes are kept inside a catalogue database as well as a list of their attributes.
+This fashion game uses MVC architecture to create a simple dress up game experience. The view layer is inside of Unity, and all the clothes are kept inside a catalogue database as well as a list of their attributes. Each item has different emotion values based off of their attributes and styles.
 
 <img width="506" alt="Screenshot 2024-04-27 123610" src="https://github.com/ArtofGaming/College-Caper/assets/54565543/a517f1e4-33e3-4b12-b3c1-c1cdb797fd72">
 
