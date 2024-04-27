@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -21,11 +22,11 @@ public class Web : MonoBehaviour
         StartCoroutine(FilterItems(button.name));
     }
 
-    public IEnumerator GetItemIDs()
+    public IEnumerator GetItemIDs(System.Action<string> callback)
     {
         WWWForm form = new WWWForm();
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/FashionGame/GetItemIDs.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://colourful-squares.000webhostapp.com/GetItemIDs.php", form))
         {
 
             yield return www.SendWebRequest();
@@ -38,16 +39,43 @@ public class Web : MonoBehaviour
             {
                 Debug.Log(www.downloadHandler.text);
                 string jsonArray = www.downloadHandler.text;
+                callback(jsonArray);
             }
         }
     }
 
-    public IEnumerator GetItem(string itemID)
+    public IEnumerator GetItem(string itemID, System.Action<string> callback)
     {
         WWWForm form = new WWWForm();
         form.AddField("itemID", itemID);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/FashionGame/GetItem.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://colourful-squares.000webhostapp.com/GetItem.php", form))
+        {
+
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log(www.downloadHandler.text);
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+                string jsonArray = www.downloadHandler.text;
+                callback(jsonArray);
+            }
+        }
+    }
+
+    public IEnumerator GetItemIcon(string itemID, System.Action<byte[]> callback)
+    {
+        
+        WWWForm form = new WWWForm();
+        form.AddField("itemID", itemID);
+        
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://colourful-squares.000webhostapp.com/GetItemIcons.php", form))
         {
 
             yield return www.SendWebRequest();
@@ -58,11 +86,16 @@ public class Web : MonoBehaviour
             }
             else
             {
-                Debug.Log(www.downloadHandler.text);
-                string jsonArray = www.downloadHandler.text;
+                Debug.Log("DOWNLOADING ICON: " + itemID);
+                // results as byte array
+                byte[] bytes = www.downloadHandler.data;
+                callback(bytes);
+                
 
             }
         }
+
+        
     }
 
     public IEnumerator FilterItems(string filter)
@@ -70,7 +103,7 @@ public class Web : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("filter", filter);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/FashionGame/FilterItems.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("https://colourful-squares.000webhostapp.com/FilterItems.php", form))
         {
 
             yield return www.SendWebRequest();
