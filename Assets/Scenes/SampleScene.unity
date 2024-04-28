@@ -1112,7 +1112,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1999384034}
+      objectReference: {fileID: 1999384038}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1121,7 +1121,7 @@ PrefabInstance:
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Web, Assembly-CSharp
+      value: ItemManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
@@ -2995,7 +2995,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1999384034}
+      objectReference: {fileID: 1999384038}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -3004,7 +3004,7 @@ PrefabInstance:
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Web, Assembly-CSharp
+      value: ItemManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
@@ -3213,7 +3213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -324.49997, y: 300.3}
+  m_AnchoredPosition: {x: -324.49997, y: 300.29996}
   m_SizeDelta: {x: 290.5, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1108690526
@@ -3566,7 +3566,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1999384034}
+      objectReference: {fileID: 1999384038}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -3575,7 +3575,7 @@ PrefabInstance:
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Web, Assembly-CSharp
+      value: ItemManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
@@ -4077,7 +4077,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1999384034}
+      objectReference: {fileID: 1999384038}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -4086,7 +4086,7 @@ PrefabInstance:
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Web, Assembly-CSharp
+      value: ItemManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
@@ -4671,7 +4671,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1999384034}
+      objectReference: {fileID: 1999384038}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -4680,7 +4680,7 @@ PrefabInstance:
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Web, Assembly-CSharp
+      value: ItemManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1597019537195888488, guid: 67127910cca0cd34e98fe59ffd78afd9,
         type: 3}
@@ -5509,7 +5509,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 949487042}
   m_HandleRect: {fileID: 949487041}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
