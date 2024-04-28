@@ -12,6 +12,7 @@ public class ItemManager : MonoBehaviour
     public string ItemID;
     public string forbutton;
     Action<string> _createItemsCallback;
+    Action<string> _destroyItemsCallback;
     public GameObject[] items;
     // Start is called before the first frame update
     void Start()
@@ -20,9 +21,12 @@ public class ItemManager : MonoBehaviour
         _createItemsCallback = (JsonArrayString) => {
             StartCoroutine(CreateItemsRoutine(JsonArrayString));
         };
-        Debug.Log("Testing");
+        _destroyItemsCallback = (JsonArrayString) => {
+            StartCoroutine(DestroyItemsRoutine(JsonArrayString));
+        };
+        //Debug.Log("Testing");
         CreateItems();
-        GetClothes();
+        
     }
 
     // Update is called once per frame
@@ -31,9 +35,11 @@ public class ItemManager : MonoBehaviour
         
     }
 
-    public void GetClothes() 
+    public void Filter(Button button)
     {
-
+        StartCoroutine(Main.Instance.Web.FilterItems(button.name, _createItemsCallback));
+        StartCoroutine(Main.Instance.Web.FilterOutItems(button.name, _destroyItemsCallback));
+        Debug.Log("Filter is called");
     }
     public void CreateItems()
     {
@@ -43,7 +49,6 @@ public class ItemManager : MonoBehaviour
 
     IEnumerator CreateItemsRoutine(string JsonArrayString)
     {
-        Debug.Log("Test");
         JSONArray jsonArray = JSON.Parse(JsonArrayString) as JSONArray;
 
         for (int i = 0; i < jsonArray.Count; i++) 
@@ -53,7 +58,7 @@ public class ItemManager : MonoBehaviour
             string id = jsonArray[i].AsObject["ID"];
             JSONObject itemInfoJson = new JSONObject();
             string name = jsonArray[i].AsObject["name"];
-            forbutton = name;
+            
           
             Action<string> getItemInfoCallback = (itemInfo) =>
             {
@@ -68,66 +73,96 @@ public class ItemManager : MonoBehaviour
             yield return new WaitUntil(() => isDone == true);
             
             GameObject itemGo = Instantiate(Resources.Load("Prefabs/ItemButton") as GameObject);
+            itemGo.GetComponent<Button>().onClick.AddListener(delegate { Dress(itemGo.GetComponent<Button>());});
             
             Item item = itemGo.AddComponent<Item>();
             item.ID = id;
             item.ItemID = itemid;
+
             GameObject parent = GameObject.Find("Canvas/Main Closet Interface/Scroll View/Viewport/Content");
             itemGo.transform.SetParent(parent.transform);
             itemGo.transform.localScale = Vector3.one;
             itemGo.transform.localPosition = Vector3.zero;
-            //itemGo.GetComponent<Button>().onClick.AddListener(Dress());
+            GameObject go = Instantiate(Resources.Load(name) as GameObject);
+            GameObject goParent = itemGo;
+            go.transform.SetParent(goParent.transform);
+            go.transform.localScale = new Vector3(5000,5000,5000);
+            go.transform.Rotate(0, 0, -90);
+            go.transform.localPosition = new Vector3(0,0,-60);
+        }
 
-            //itemGo.transform.Find("Name").GetComponent<Text>().text = itemInfoJson["name"];
-            //itemGo.transform.Find("Price").GetComponent<Text>().text = itemInfoJson["price"];
-            //itemGo.transform.Find("Description").GetComponent<Text>().text = itemInfoJson["description"];
+    }
 
-            byte[] bytes = ImageManager.Instance.LoadImage(itemid);
-            Debug.Log("Got here");
-            //Download from web
-            if (bytes.Length == 0)
+    IEnumerator DestroyItemsRoutine(string JsonArrayString)
+    {
+        //Debug.Log("Test");
+        JSONArray jsonArray = JSON.Parse(JsonArrayString) as JSONArray;
+
+        for (int i = 0; i < jsonArray.Count; i++)
+        {
+            bool isDone = false;
+            string itemid = jsonArray[i].AsObject["id"];
+            string id = jsonArray[i].AsObject["ID"];
+            JSONObject itemInfoJson = new JSONObject();
+            string name = jsonArray[i].AsObject["name"];
+
+            Debug.Log(name);
+
+            Action<string> getItemInfoCallback = (itemInfo) =>
             {
-                Action<byte[]> getItemIconCallback = (downloadedBytes) =>
+                isDone = true;
+                JSONArray tempArray = JSON.Parse(itemInfo) as JSONArray;
+                itemInfoJson = tempArray[0].AsObject;
+            };
+
+            StartCoroutine(Main.Instance.Web.GetItem(itemid, getItemInfoCallback));
+
+
+            yield return new WaitUntil(() => isDone == true);
+
+            GameObject parent = GameObject.Find("Canvas/Main Closet Interface/Scroll View/Viewport/Content");
+            Transform parentTransform = parent.transform;
+
+            foreach(Transform child in parentTransform.transform)
+            {
+                foreach (Transform c in child.transform)
                 {
-                    Sprite sprite = ImageManager.Instance.BytesToSprite(downloadedBytes);
-                    itemGo.transform.Find("Image").GetComponent<Image>().sprite = sprite;
-                    ImageManager.Instance.SaveImage(itemid, downloadedBytes);
-                    ImageManager.Instance.SaveVersionJson();
-                };
-                StartCoroutine(Main.Instance.Web.GetItemIcon(itemid, getItemIconCallback));
+                    if (c.name.Contains(name))
+                    {
+                        Destroy(c.parent.gameObject);
+                        Debug.Log(name + " was destroyed");
+                    }
+                }
+                
             }
-            //Load from device
-            else
-            {
-                Debug.Log("LOADING ICON FROM DEVICE: " + itemid);
-                Sprite sprite = ImageManager.Instance.BytesToSprite(bytes);
-                itemGo.transform.Find("Image").GetComponent<Image>().sprite = sprite;
-                itemGo.GetComponent<Button>().onClick.AddListener(Dress);
-            }
-
-            /*itemGo.transform.Find("SellButton").GetComponent<Button>().onClick.AddListener(() =>
-            {
-                string iId = itemid;
-                string uId = Main.Instance.UserInfo.UserID;
-                StartCoroutine(Main.Instance.Web.SellItem(iId,uId));
-            }
-                );
-            */
-
 
         }
 
     }
 
-    public void Dress()
+    public void Dress(Button button)
     {
-        Debug.Log(forbutton);
-        GameObject.Find(forbutton).GetComponent<MeshRenderer>().enabled = true;
+        string selectedItem = button.transform.GetChild(2).name;
+        string[] nameList = selectedItem.Split("(");
+        Debug.Log(nameList[0]);
+        GameObject model = GameObject.Find("model/clothes");
+        //use name of object that is child of button to find object that is child of dressupmodel
+        model.transform.Find(nameList[0]).gameObject.GetComponent<MeshRenderer>().enabled = true;
+            //(button.name)
         //GameObject clothes = mine.GameObject();
         //Debug.Log(mine);
         //Debug.Log(clothes);
         //clothes.SetActive(true);
         
 
+    }
+
+    public void Clear()
+    {
+        GameObject modelclothes = GameObject.Find("model/clothes");
+        foreach(Transform child in modelclothes.transform)
+        {
+            child.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 }
